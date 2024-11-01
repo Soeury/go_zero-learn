@@ -1,0 +1,15 @@
+Name: user.rpc
+Mode: dev
+ListenOn: 0.0.0.0:8080
+
+Mysql:
+  DataSource: root:123456@tcp(127.0.0.1:3306)/zero?charset=utf8mb4&parseTime=true
+
+CacheRedis:
+  - Host: 192.168.19.130:6379
+    Pass: "123456"
+
+Consul:
+  Host: 127.0.0.1:8500
+  Key: zero_user_rpc
+  

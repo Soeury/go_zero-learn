@@ -1,0 +1,37 @@
+syntax = "v1"
+
+// ------- 创建订单号 -------
+type CreateOrderReq {
+	UserID  int64 `json:"user_id"`
+	OrderID int64 `json:"order_id"`
+}
+
+type CreateOrderResp {
+	Message string `json:"message"`
+}
+
+// ------- 根据订单号查询用户信息 -------
+type SearchReq {
+	OrderID int64 `form:"order_id"`
+}
+
+type SearchResp {
+	UserID   string `json:"user_id"`
+	Status   int    `json:"status"`
+	UserName string `json:"username"`
+}
+
+@server (
+	prefix: api
+)
+service order-api {
+	// get 方法的请求数据  tag 不能使用 json
+	@handler SearchHandler
+	get /order/search (SearchReq) returns (SearchResp)
+
+	@handler CreateOrderHandler
+	post /order/create (CreateOrderReq) returns (CreateOrderResp)
+}
+
+// 先切换路径
+// goctl api go -api order.api -dir . -style=goZero

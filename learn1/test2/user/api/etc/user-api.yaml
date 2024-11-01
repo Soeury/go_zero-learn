@@ -1,0 +1,22 @@
+Name: user-api
+Host: 0.0.0.0
+Port: 8888
+
+Log:
+  ServiceName: "user-srv"
+  Mode: file
+  Encoding: json
+  Path: logs
+  Level: debug
+  Stat: true
+
+Auth:
+  AccessSecret: "boliang and rabbit"
+  AccessExpire: 6000  
+
+Mysql:
+  DataSource: root:123456@tcp(127.0.0.1:3306)/zero?parseTime=True&loc=Local
+
+CacheRedis:
+  - Host: 192.168.19.130:6379
+    Pass: "123456"

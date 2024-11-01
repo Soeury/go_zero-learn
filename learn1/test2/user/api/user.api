@@ -1,0 +1,54 @@
+syntax = "v1"
+
+// ------- 登录 -------
+type SignupRequest {
+	Username   string `json:"username"`
+	Password   string `json:"password"`
+	RePassword string `json:"re_password"`
+	Gender     int    `json:"gender,options=0|1|2,default=0"`
+}
+
+type SignupResponse {
+	Message string `json:"message"`
+}
+
+// ------- 注册 -------
+type LoginRequest {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginResponse {
+	Message      string `json:"message"`
+	AccessToken  string `json:"access_token"`
+	AccessExpire int    `json:"access_expire"`
+	RefreshAfter int    `json:"refresh_after"`
+}
+
+// ------- 用户信息 -------
+type DetailRequest {
+	UserID string `form:"user_id"`
+}
+
+type DetailResponse {
+	Username string `json:"username"`
+	Gender   int    `json:"gender"`
+}
+
+service user-api {
+	// 定义 http.HandleFunc 转换的 go 文件名称及方法，每个接口都会跟一个 handler
+	@handler SignupHandler
+	post /user/signup (SignupRequest) returns (SignupResponse)
+
+	@handler LoginHandler
+	post /user/login (LoginRequest) returns (LoginResponse)
+}
+
+@server (
+	jwt:        Auth
+	middleware: Cost
+)
+service user-api {
+	@handler DetailHandler
+	get /user/detail (DetailRequest) returns (DetailResponse)
+}

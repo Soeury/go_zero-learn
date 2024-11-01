@@ -1,0 +1,15 @@
+syntax = "v1"
+
+type Request {
+	Short string `path:"short"`
+}
+
+type Response {
+	Long string `json:"long"`
+}
+
+service short-api {
+	@handler ShortHandler
+	get /:short (Request) returns (Response)
+}
+
